@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<!-- tiles(template 기반의 페이지 처리 시, 사용) -->
+	<!-- 일반회원의 페이지 설정 -->
+	<definition name="baseLayout" template="/WEB-INF/views/template/base_template.jsp">
+		<put-attribute name="title" value="Shop" />
+		<put-attribute name="menu" value="/WEB-INF/views/template/menu.jsp" />
+		<put-attribute name="body" value="" />
+	</definition>
+
+	<!-- index.jsp : <jsp:forward page="/item/itemList" /> -->
+	<!-- ItemController : @RequestMapping("/item") -> @GetMapping("/itemList") -> return "item/item_list" -->
+	<!-- 최초 인덱스에서 아이템컨트롤러로 이동 되고 첫번째로 리턴 받는 값이 "item/item_list" 아래에 적용 되어 템플레이트로 이동 된다. -->
+	<!-- */* 에 item/item_list가 적용 된다. -->
+	<definition name="*/*" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+		<!-- <put-attribute name="body" value="/WEB-INF/views/{1 폴더명}/{2 jsp 파일명}.jsp" /> -->
+	</definition>
+
+</tiles-definitions>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

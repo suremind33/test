@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 페이지 요청과 응답에 대한 설정 -->
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" />
+
+
+	<!-- 타일즈 설정 -->
+	<!-- tiles(template 기반의 페이지 처리 시, 사용) -->
+	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions">
+			<beans:list>
+				<beans:value>classpath:tiles-config.xml</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+		<beans:property name="order" value="1" /> <!-- 순위 지정 밸류 1면, 실행 1순위 -->
+	</beans:bean>
+
+
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2" /> <!-- 순위 지정 밸류 2면, 실행 2순위 -->
+		<!-- prefix : (접두사) /WEB-INF/views/ -->
+		<!-- suffix : (접미사) .jsp -->
+		<!-- 초기 설정 시, HomeController.java 에서 받은 return "home"; -->
+		<!-- 초기 설정시, 결과 : /WEB-INF/views/home.jsp" 페이지가 열린다(웹창에 Hello world!가 실행) -->
+		<!-- 설정 하기에 따라 상기 예시의 "home" 부분이 변경된다 -->
+
+	</beans:bean>
+
+	<context:component-scan base-package="com.spring.shop.*.controller" />
+	<!-- com.spring.shop으로 하면 해당 패키지 밑의 모든 것을 읽기 때문에 controller를 지정한다. -->
+	<!-- 별표를 사용하면 아래와 같이 생성 할 필요가 없다 -->
+	<!-- <context:component-scan base-package="com.spring.shop.item.controller" /> -->
+	<!-- <context:component-scan base-package="com.spring.shop.member.controller" /> -->
+	<!-- <context:component-scan base-package="com.spring.shop.cart.controller" /> -->
+
+	<!-- 자바식으로 하면 component(클래스)-scan(클래스를 찾아 본다) base-package="com.kh.board.controller"(베이스 패키지 안에 있는 것들을) -->
+	<!-- 해당 페키지 내의 모든 클래스를 쭉~ 읽는다. -->
+	<!-- 해당 패키지 내의 특정 클래스들의 객체를 자동 생성 한다. -->
+	<!-- 특정 클래스(어노테션이 지정된 클래스) : @Controller로 들로 되어 있는 놈들의 클래스를 생성 한다 -->
+	<!-- component-scan을 통해 미리 지정된 패키지 내의 클래스를 읽는 이유 -->
+	<!-- - 해당 패키지 내에서 객체 생성이 필요한 클래스의 객체를 생성하기 위해. -->
+
+	<!-- 이클립스 생성은 개발자가 BoardDTO boartDTO = new BoardDTO();로 객체를 생성해야된다. -->
+	<!-- 스프링에서는 개발자가 BoardDTO boartDTO;로 선언만 해도 객체를 생성 해준다. -->
+	<!-- 단, MemberService memberService = new MemberServiceImpl(); 와같이 좌우가 다른건 생성 할수 없다. -->
+
+
+</beans:beans>
